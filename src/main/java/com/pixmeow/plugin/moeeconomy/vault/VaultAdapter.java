@@ -2,6 +2,7 @@ package com.pixmeow.plugin.moeeconomy.vault;
 
 import com.pixmeow.plugin.moeeconomy.db.DBQuery;
 import com.pixmeow.plugin.moeeconomy.db.MongoConnect;
+import com.pixmeow.plugin.moeeconomy.economy.Fee;
 import com.pixmeow.plugin.moeeconomy.economy.Interest;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -151,11 +152,11 @@ public class VaultAdapter implements Economy {
 
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, double v) {
-        if (v <= 1000) v *= Interest.I.getInterest();
-        else if (v <= 5000) v *= Interest.II.getInterest();
-        else if (v <= 10000) v *= Interest.III.getInterest();
-        else if (v <= 50000) v *= Interest.IV.getInterest();
-        else v *= Interest.V.getInterest();
+        if (v <= 1000) v *= Fee.I.getFee();
+        else if (v <= 5000) v *= Fee.II.getFee();
+        else if (v <= 10000) v *= Fee.III.getFee();
+        else if (v <= 50000) v *= Fee.IV.getFee();
+        else v *= Fee.V.getFee();
         return DBQuery.withdraw(offlinePlayer, v);
     }
 
@@ -187,11 +188,11 @@ public class VaultAdapter implements Economy {
 
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, double v) {
-        if (v <= 2000) v *= Interest.I.getInterest();
-        else if (v <= 6000) v *= Interest.II.getInterest();
-        else if (v <= 10000) v *= Interest.III.getInterest();
-        else if (v <= 50000) v *= Interest.IV.getInterest();
-        else v *= Interest.V.getInterest();
+        if (v <= 2000) v *= Fee.I.getFee();
+        else if (v <= 6000) v *= Fee.II.getFee();
+        else if (v <= 10000) v *= Fee.III.getFee();
+        else if (v <= 50000) v *= Fee.IV.getFee();
+        else v *= Fee.V.getFee();
         return DBQuery.deposit(offlinePlayer, v);
     }
 
