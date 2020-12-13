@@ -89,13 +89,16 @@ public class DBQuery extends MongoConnect{
     }
 
     private Document accountTemp(OfflinePlayer player){
-        return new Document().append("uid", player.getUniqueId().toString());
+        return new Document()
+                .append("uid", player.getUniqueId().toString())
+                .append("balance", (double) 0);
     }
 
     private Document bankAccountTemp(OfflinePlayer player, String s, boolean isOwner){
         return new Document()
                 .append("uid", player.getUniqueId().toString())
                 .append("identity", s)
-                .append("isOwner", isOwner);
+                .append("isOwner", isOwner)
+                .append("balance", (double) 0);
     }
 }
