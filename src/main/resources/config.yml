@@ -1,0 +1,7 @@
+db:
+  engine: Mongo
+  host: pixs.vhkx3.mongodb.net
+  port: 27017
+  username: PixS
+  pass: wPo0cjYwDlk8II49
+  database: MOE_Economy

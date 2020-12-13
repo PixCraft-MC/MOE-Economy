@@ -1,0 +1,7 @@
+name: MOEEconomy
+version: @version@
+main: com.pixmeow.plugin.moeeconomy.MOEEconomy
+prefix: MOE Economy
+authors: [ PixMeow ]
+description: MOE 经济系统
+website: https://moe.pixmeow.com
