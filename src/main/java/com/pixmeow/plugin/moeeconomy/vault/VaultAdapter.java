@@ -224,32 +224,41 @@ public class VaultAdapter implements Economy {
 
     @Override
     public EconomyResponse createBank(String s, OfflinePlayer offlinePlayer) {
-        return null;
+        if (DBQuery.registerBank(offlinePlayer, s))
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.SUCCESS, "成功创建银行！");
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "银行创建失败！");
     }
 
     @Override
     public EconomyResponse deleteBank(String s) {
-        return null;
+        if (DBQuery.deleteBank(s))
+            return new EconomyResponse(0, 0, EconomyResponse.ResponseType.SUCCESS, "成功注销银行！");
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "银行注销失败!");
     }
 
     @Override
     public EconomyResponse bankBalance(String s) {
-        return null;
+        double balance = DBQuery.bankBalance(s);
+        return new EconomyResponse(0, balance,
+                balance != -1 ? EconomyResponse.ResponseType.SUCCESS : EconomyResponse.ResponseType.FAILURE,
+                balance != -1 ? "" : "获取余额失败！");
     }
 
     @Override
     public EconomyResponse bankHas(String s, double v) {
-        return null;
+        double amount = DBQuery.bankBalance(s);
+        return new EconomyResponse(v, amount, amount >= v ? EconomyResponse.ResponseType.SUCCESS : EconomyResponse.ResponseType.FAILURE,
+                amount >= v ? "" : "余额不足！");
     }
 
     @Override
     public EconomyResponse bankWithdraw(String s, double v) {
-        return null;
+        return DBQuery.bankWithdraw(s, v);
     }
 
     @Override
     public EconomyResponse bankDeposit(String s, double v) {
-        return null;
+        return DBQuery.bankDeposit(s, v);
     }
 
     /**
@@ -264,7 +273,8 @@ public class VaultAdapter implements Economy {
 
     @Override
     public EconomyResponse isBankOwner(String s, OfflinePlayer offlinePlayer) {
-        return null;
+        if (DBQuery.bankOwner(offlinePlayer, s)) return new EconomyResponse(0, bankBalance(s).balance, EconomyResponse.ResponseType.SUCCESS, "");
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "你不是 "+ s + " 银行的拥有者！");
     }
 
     /**
@@ -279,12 +289,13 @@ public class VaultAdapter implements Economy {
 
     @Override
     public EconomyResponse isBankMember(String s, OfflinePlayer offlinePlayer) {
-        return null;
+        if (DBQuery.bankMember(offlinePlayer, s)) return new EconomyResponse(0, bankBalance(s).balance, EconomyResponse.ResponseType.SUCCESS, "");
+        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "不是 "+ s + " 银行的会员");
     }
 
     @Override
     public List<String> getBanks() {
-        return null;
+        return DBQuery.bankList();
     }
 
     /**
@@ -298,7 +309,7 @@ public class VaultAdapter implements Economy {
 
     @Override
     public boolean createPlayerAccount(OfflinePlayer offlinePlayer) {
-        return false;
+        return DBQuery.register(offlinePlayer);
     }
 
     /**
